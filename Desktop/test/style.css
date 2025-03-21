@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #101118;
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+.orange { color: orange; }
+.purple { color: #a855f7; }
+
+.social-icons a {
+    margin: 0 5px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+}
+
+.user {
+    background: #facc15;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: black;
+}
+
+.hero {
+    padding: 50px 20px;
+}
+
+h2 {
+    font-size: 26px;
+}
+
+.bold { font-weight: 700; }
+
+form {
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+}
+
+input {
+    padding: 10px;
+    width: 300px;
+    border: none;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    background:#0b0c10 ;
+    border: rgb(255, 123, 0);                                                                                                                                                             
+    cursor: pointer;
+    margin-left: 10px;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    
+}
+
+.halloween-image img {
+    width: 400px;
+    margin-top: 20px;
+}
+
+.rewards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 50px 20px;
+    
+}
+
+.reward {
+    background: #1c1c1e;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+}
+
+.reward img {
+    width: 80px;
+}
+
+.reward h3 {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.reward span {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+    color: orange;
+}
