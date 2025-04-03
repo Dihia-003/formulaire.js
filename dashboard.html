@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <h2>Bienvenue sur votre tableau de bord</h2>
+    
+    <p id="welcomeMessage"></p>
+
+    <button id="logoutButton">Se déconnecter</button>
+
+    <script>
+        // Vérification si l'utilisateur est bien connecté
+        let storedNom = localStorage.getItem("nomUtilisateur");
+
+        if (!storedNom) {
+            alert("Vous n'êtes pas connecté. Vous allez être redirigé vers la page de connexion.");
+            window.location.href = "login.html"; // Redirection vers la page de connexion si pas connecté
+        } else {
+            // Affichage d'un message de bienvenue avec le nom de l'utilisateur
+            document.getElementById("welcomeMessage").textContent = `Bonjour, ${storedNom}!`;
+        }
+
+        // Fonction de déconnexion
+        document.getElementById("logoutButton").addEventListener("click", function() {
+            localStorage.clear();  // Suppression des données de session (nom et mot de passe)
+            alert("Vous êtes maintenant déconnecté.");
+            window.location.href = "login.html"; // Redirige vers la page de connexion
+        });
+    </script>
+</body>
+</html>

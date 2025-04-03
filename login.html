@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <h2>Connexion</h2>
+    <form id="loginForm">
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" name="nom" required><br><br>
+
+        <label for="password">Mot de passe :</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <button type="submit">Se connecter</button>
+    </form>
+    <p>Pas encore de compte ? <a href="index.html">Inscrivez-vous ici</a></p>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", async function(e) {
+            e.preventDefault(); 
+
+            let nom = document.getElementById("nom").value.trim();
+            let password = document.getElementById("password").value.trim();
+
+            //Vérification des champs vides
+            if (nom === "" || password === "") {
+                alert("Veuillez remplir tous les champs.");
+                return;
+            }
+
+            let storedNom = localStorage.getItem("nomUtilisateur");
+            let storedHashedPassword = localStorage.getItem("mdpUtilisateur");
+
+            if (!storedNom || !storedHashedPassword) {
+                alert("Aucun compte trouvé. Veuillez vous inscrire.");
+                return;
+            }
+
+            const hashedInputPassword = await hashPassword(password);
+
+            if (nom === storedNom && hashedInputPassword === storedHashedPassword) {
+                alert("Connexion réussie !");
+                window.location.href = "dashboard.html"; // Redirection vers une page d'accueil
+            } else {
+                alert("Nom ou mot de passe incorrect.");
+            }
+        });
+
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hash = await crypto.subtle.digest("SHA-256", data);
+            return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, "0")).join("");
+        }
+    </script>
+</body>
+</html>

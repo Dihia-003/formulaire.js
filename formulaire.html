@@ -4,32 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulaire</title>
-    <link rel="stylesheet" href="formulaire.css" >
+    <link rel="stylesheet" href="formulaire.css">
 </head>
 <body>
-    <h2>Formulaire</h2>
-    <p>Veuillez remplir le formulaire ci-dessous :</p>
-    <form action="/" method="POST" id="myForm">
-        <input type="email" name="email" placeholder="Enter your email" required>
-        <input type="text" name="username" placeholder="Enter your name" required>
-        <button type="submit">Submit</button>
+    <h2>Formulaire d'inscription</h2>
+    <form id="registerForm">
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" name="nom" required><br><br>
+
+        <label for="password">Mot de passe :</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <label for="confirmPassword">Confirmer le mot de passe :</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required><br><br>
+
+        <button type="submit">S'inscrire</button>
     </form>
+    <p>Déjà un compte ? <a href="login.html">Connectez-vous ici</a></p>
+
     <script>
-      let form = document.getElementById('myForm');
-      form.addEventListener('submit', function(event) {
-          event.preventDefault(); // Prevent the default form submission
-          let formData = new FormData(form);
-          let xhr = new XMLHttpRequest();
-          xhr.open('POST', form.action, true);
-          xhr.onload = function() {
-              if (xhr.status === 200) {
-                  alert('Form submitted successfully!');
-              } else {
-                  alert('An error occurred while submitting the form.');
-              }
-          };
-          xhr.send(formData);
-      });
+        document.getElementById("registerForm").addEventListener("submit", async function(e) {
+            e.preventDefault(); 
+
+            // Récupération des valeurs du formulaire
+            let nom = document.getElementById("nom").value.trim();
+            let password = document.getElementById("password").value.trim();
+            let confirmPassword = document.getElementById("confirmPassword").value.trim();
+
+            //Vérification des champs vides
+            if (nom === "" || password === "" || confirmPassword === "") {
+                alert("Veuillez remplir tous les champs.");
+                return;
+            }
+
+            // Vérification de la longueur du mot de passe
+            if (password.length < 6) {
+                alert("Le mot de passe doit contenir au moins 6 caractères.");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert("Les mots de passe ne correspondent pas.");
+                return;
+            }
+
+            // Hachage du mot de passe avec SHA-256
+            const hashedPassword = await hashPassword(password);
+
+            //Enregistrement des informations dans le stockage local
+            localStorage.setItem("nomUtilisateur", nom);
+            localStorage.setItem("mdpUtilisateur", hashedPassword);
+
+            alert("Inscription réussie ! Vous pouvez maintenant vous connecter.");
+            window.location.href = "login.html";
+        });
+
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hash = await crypto.subtle.digest("SHA-256", data);
+            return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, "0")).join("");
+        }
     </script>
 </body>
 </html>
